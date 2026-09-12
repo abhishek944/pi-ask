@@ -1,6 +1,6 @@
 {
   "name": "@abhishek944/pi-ask",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A lightweight one-shot ask command for Pi with a limited tool set.",
   "keywords": [
     "pi-package",
@@ -17,6 +17,11 @@
     ".": {
       "default": "./src/index.ts"
     },
+    "./guard": {
+      "types": "./src/guard.ts",
+      "import": "./src/guard.ts",
+      "default": "./src/guard.ts"
+    },
     "./package.json": {
       "default": "./package.json"
     }
@@ -25,6 +30,7 @@
     "src",
     "prompts",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE"
   ],
   "pi": {
