@@ -7,11 +7,17 @@ const ASK_TOOL_NAMES = [
   "grep",
   "find",
   "ls",
+  "web_enable",
   "web_search",
   "source_check",
   "fetch_content",
   "get_search_content",
   "image_generate",
+  "sprite_generate",
+  "MonitorList",
+  "LoopList",
+  "WorkList",
+  "TodoList",
 ];
 
 export default function askExtension(pi: ExtensionAPI): void {
@@ -62,7 +68,7 @@ export default function askExtension(pi: ExtensionAPI): void {
       ownerId: ASK_OWNER_ID,
       allowedTools: ASK_TOOL_NAMES,
       context:
-        "[ASK MODE]\nAnswer the question directly and concisely. Use the available lookup or image tool only when it is genuinely helpful. Do not change project files or run shell commands.",
+        "[ASK MODE]\nAnswer the question directly and concisely. Use the available lookup, status, image, or sprite tools only when genuinely helpful. Image and sprite generation may create output files; do not otherwise change project files, modify works, todos, loops, or monitors, or run shell commands.",
     });
     if (result.status !== "active" || !result.acquisitionToken) {
       ctx.ui.notify("Ask mode could not start because another restricted answer is active.", "warning");

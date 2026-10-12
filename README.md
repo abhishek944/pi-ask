@@ -32,15 +32,23 @@ The question runs with only the approved tools that were already active:
 - `grep`
 - `find`
 - `ls`
+- `web_enable`
 - `web_search`
 - `source_check`
 - `fetch_content`
 - `get_search_content`
 - `image_generate`
+- `sprite_generate`
+- `MonitorList`
+- `LoopList`
+- `WorkList`
+- `TodoList`
+
+`web_enable` can activate the configured web lookup tools during the answer. Sprite generation requires `pi-image-gen.spriteGeneration.enabled` to be true. Allowlisting a tool does not install or enable a disabled extension.
 
 Shell access and file-changing tools such as `bash`, `edit`, and `write` are unavailable. Other unapproved extension tools are unavailable too.
 
-Image generation is intentionally allowed and may create image files. All other project-file changes are blocked by removing those tools and by a second check immediately before any tool call.
+Image and sprite generation are intentionally allowed and may create output files. Work, todo, loop, and monitor mutations remain unavailable. All other project-file changes are blocked by removing those tools and by a second check immediately before any tool call.
 
 When the answer settles, Pi restores the exact tool list that was active before `/ask`.
 
@@ -86,7 +94,7 @@ The guard module is exported as `@abhishek944/pi-ask/guard`. The `pi-ask` extens
 ## Notes
 
 - `/ask` needs a question. Running it without text shows a short usage message.
-- Lookup and image tools are optional. Pi uses them only when helpful.
+- Lookup, status, image, and sprite tools are optional. Pi uses them only when helpful.
 - Wait for the `/ask` answer to finish before sending another agent prompt. Anything queued into the same agent run keeps the limited tool set until Pi settles.
 - If startup fails before Pi begins the answer, run `/ask reset` once Pi is idle, or use `/reload`. Either command restores the previous tools.
 - Built-in slash commands and shell commands typed directly by the user are outside this model-tool guardrail.
