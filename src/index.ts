@@ -126,11 +126,6 @@ export default function askExtension(pi: ExtensionAPI): void {
       return { action: "handled" };
     }
 
-    if (guard.isActive() && event.text.startsWith("/ask")) {
-      ctx.ui.notify("A restricted answer is already running.", "warning");
-      return { action: "handled" };
-    }
-
     const match = event.text.match(/^\/ask(?:\s+([\s\S]*))?$/);
     if (!match) return;
 
@@ -143,6 +138,10 @@ export default function askExtension(pi: ExtensionAPI): void {
     if (!ctx.isIdle()) {
       ctx.ui.notify("Wait for the current answer to finish before using /ask.", "warning");
       return { action: "handled" };
+    }
+
+    if (askAcquisitionToken) {
+      guard.release(ASK_OWNER_ID, askAcquisitionToken, ctx);
     }
 
     const result = guard.acquire({

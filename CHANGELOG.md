@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.2
+
+- Removed the active restricted-answer warning for `/ask`.
+- Automatically clear the previous Ask guard before starting a new idle `/ask`, so stale Ask state no longer silently blocks the command.
+
 ## 0.4.1 - 2026-10-17
 
 - Fixed Ask startup with Pi 1.3.0 by accepting both current and legacy built-in tool provenance paths while preserving the existing tool restrictions.
