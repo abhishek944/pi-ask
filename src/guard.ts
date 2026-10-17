@@ -100,7 +100,8 @@ function hasTrustedProvenance(pi: ExtensionAPI, rules: PiAskGuardToolRule[]): bo
     const sourceInfo = tools.get(rule.name)?.sourceInfo;
     if (!sourceInfo) return true;
     if (BUILTIN_TOOL_NAMES.has(rule.name)) {
-      return sourceInfo.source === "builtin" && sourceInfo.path === `<builtin:${rule.name}>`;
+      return sourceInfo.source === "builtin"
+        && (sourceInfo.path === `builtin:${rule.name}` || sourceInfo.path === `<builtin:${rule.name}>`);
     }
     if (!rule.sourceInfo) return true;
     return sourceInfo.source === rule.sourceInfo.source && sourceInfo.path === rule.sourceInfo.path;

@@ -152,7 +152,6 @@ export default function askExtension(pi: ExtensionAPI): void {
         "[ASK MODE]\nAnswer the question directly and concisely. Use the available lookup, status, image, or sprite tools only when genuinely helpful. Image and sprite generation may create output files; do not otherwise change project files, modify works, todos, loops, or monitors, or run shell commands.",
     });
     if (result.status !== "active" || !result.acquisitionToken) {
-      ctx.ui.notify("Ask mode could not start because another restricted answer is active.", "warning");
       return { action: "handled" };
     }
     askAcquisitionToken = result.acquisitionToken;

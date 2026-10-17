@@ -15,7 +15,7 @@ pi install npm:@abhishek944/pi-ask
 Or directly from GitHub:
 
 ```sh
-pi install git:github.com/abhishek944/pi-ask@v0.4.0
+pi install git:github.com/abhishek944/pi-ask@v0.4.1
 ```
 
 Restart Pi after installing, or run `/reload` in an existing session.

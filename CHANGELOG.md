@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.1 - 2026-10-17
+
+- Fixed Ask startup with Pi 1.3.0 by accepting both current and legacy built-in tool provenance paths while preserving the existing tool restrictions.
+- Removed the misleading acquisition-failure warning that claimed another restricted answer was active. Failed guard activation still prevents an unrestricted answer.
+
 ## 0.4.0 - 2026-10-17
 
 - Added `/ask tools`, a local metadata-only report of the effective Ask tools, tools removed by the Ask policy, and allowlisted tools that are inactive or not registered. It starts no model turn, changes no guard or tool state, and labels itself a preview when Ask is not active.
