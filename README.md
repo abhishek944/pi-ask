@@ -15,7 +15,7 @@ pi install npm:@abhishek944/pi-ask
 Or directly from GitHub:
 
 ```sh
-pi install git:github.com/abhishek944/pi-ask@v0.2.0
+pi install git:github.com/abhishek944/pi-ask@v0.4.0
 ```
 
 Restart Pi after installing, or run `/reload` in an existing session.
@@ -51,6 +51,10 @@ Shell access and file-changing tools such as `bash`, `edit`, and `write` are una
 Image and sprite generation are intentionally allowed and may create output files. Work, todo, loop, and monitor mutations remain unavailable. All other project-file changes are blocked by removing those tools and by a second check immediately before any tool call.
 
 When the answer settles, Pi restores the exact tool list that was active before `/ask`.
+
+Run `/ask tools` for a local capability report. It starts no model turn and changes no tools. The report labels itself a **preview** when Ask is not active, and lists the actual effective tools while an Ask answer is running. It separates allowlisted tools that are active, allowlisted tools that are registered in Pi but inactive, and allowlisted names that are not registered at all; a missing name does not tell Pi Ask why it is missing. If another extension owns the current restricted run, the report says so instead of presenting that run's tools as Ask's policy.
+
+The report repeats the fixed boundaries: shell and file-changing tools and work, todo, loop, and monitor mutations stay blocked, while `image_generate` and `sprite_generate` may create image files. Registration or active status is not a health check; a tool or provider can still fail at runtime. `/ask tools` must be typed exactly; other text after `/ask` remains a question.
 
 ## Reusable guard
 

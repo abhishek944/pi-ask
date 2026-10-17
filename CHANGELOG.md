@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0 - 2026-10-17
+
+- Added `/ask tools`, a local metadata-only report of the effective Ask tools, tools removed by the Ask policy, and allowlisted tools that are inactive or not registered. It starts no model turn, changes no guard or tool state, and labels itself a preview when Ask is not active.
+
 ## 0.3.0 - 2026-10-12
 
 - Allowed optional web activation, sprite generation, and read-only work, todo, loop, and monitor status tools during `/ask`.
