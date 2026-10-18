@@ -1,6 +1,6 @@
 {
   "name": "@abhishek944/pi-ask",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "A lightweight one-shot ask command for Pi with a limited tool set.",
   "keywords": [
     "pi-package",

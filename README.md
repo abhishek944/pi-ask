@@ -2,7 +2,7 @@
 
 A small [Pi](https://pi.dev) extension for simple, one-shot questions.
 
-`/ask` temporarily narrows Pi's active tools, sends one question, and restores the exact previous tool set when the answer finishes. It does not require a deep investigation, web research, a plan, or repository changes.
+`/ask` temporarily narrows Pi's active tools for one answer and restores the exact previous tool set when it finishes or is cancelled. It adds no Ask Mode instructions to the conversation and needs no reset or clear command. Later prompts use the previous tools normally.
 
 ## Install
 
@@ -15,7 +15,7 @@ pi install npm:@abhishek944/pi-ask
 Or directly from GitHub:
 
 ```sh
-pi install git:github.com/abhishek944/pi-ask@v0.4.1
+pi install git:github.com/abhishek944/pi-ask@v0.4.3
 ```
 
 Restart Pi after installing, or run `/reload` in an existing session.
@@ -50,7 +50,7 @@ Shell access and file-changing tools such as `bash`, `edit`, and `write` are una
 
 Image and sprite generation are intentionally allowed and may create output files. Work, todo, loop, and monitor mutations remain unavailable. All other project-file changes are blocked by removing those tools and by a second check immediately before any tool call.
 
-When the answer settles, Pi restores the exact tool list that was active before `/ask`.
+When the answer settles, Pi restores the exact tool list that was active before `/ask`. If startup fails before an answer begins, the next idle prompt automatically restores that list before it is processed.
 
 Run `/ask tools` for a local capability report. It starts no model turn and changes no tools. The report labels itself a **preview** when Ask is not active, and lists the actual effective tools while an Ask answer is running. It separates allowlisted tools that are active, allowlisted tools that are registered in Pi but inactive, and allowlisted names that are not registered at all; a missing name does not tell Pi Ask why it is missing. If another extension owns the current restricted run, the report says so instead of presenting that run's tools as Ask's policy.
 
@@ -100,7 +100,6 @@ The guard module is exported as `@abhishek944/pi-ask/guard`. The `pi-ask` extens
 - `/ask` needs a question. Running it without text shows a short usage message.
 - Lookup, status, image, and sprite tools are optional. Pi uses them only when helpful.
 - Wait for the `/ask` answer to finish before sending another agent prompt. Anything queued into the same agent run keeps the limited tool set until Pi settles.
-- If startup fails before Pi begins the answer, run `/ask reset` once Pi is idle, or use `/reload`. Either command restores the previous tools.
 - Built-in slash commands and shell commands typed directly by the user are outside this model-tool guardrail.
 - This is an extension-level guardrail, not an operating-system sandbox.
 

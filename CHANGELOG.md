@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.3 - 2026-10-18
+
+- Keep `/ask` tool restrictions scoped to its answer without injecting Ask Mode instructions into the conversation.
+- Remove the manual `/ask reset` command and automatically restore leftover Ask tools before the next idle prompt.
+- Preserve the reusable guard API and restrictions owned by other extensions.
+
 ## 0.4.2
 
 - Removed the active restricted-answer warning for `/ask`.

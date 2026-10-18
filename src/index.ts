@@ -97,10 +97,8 @@ function buildAskToolsReport(pi: ExtensionAPI, guard: PiAskGuard): string {
 
 export default function askExtension(pi: ExtensionAPI): void {
   let latestCtx: ExtensionContext | undefined;
-  let askAcquisitionToken: string | undefined;
   const guard = createPiAskGuard(pi, {
     onReleased: (ctx) => {
-      askAcquisitionToken = undefined;
       (ctx ?? latestCtx)?.ui.setStatus("ask", undefined);
     },
   });
@@ -113,17 +111,10 @@ export default function askExtension(pi: ExtensionAPI): void {
       return { action: "handled" };
     }
 
-    if (guard.isActive(ASK_OWNER_ID) && event.text === "/ask reset") {
-      if (!ctx.isIdle()) {
-        ctx.ui.notify("The current /ask answer is still running.", "warning");
-        return { action: "handled" };
-      }
-      if (!askAcquisitionToken || !guard.release(ASK_OWNER_ID, askAcquisitionToken, ctx)) {
-        ctx.ui.notify("Ask mode could not restore its tools safely.", "error");
-        return { action: "handled" };
-      }
-      ctx.ui.notify("Ask mode cleared. Your previous tools were restored.", "info");
-      return { action: "handled" };
+    // A failed startup can leave tools selected without a run to settle.
+    if (ctx.isIdle() && guard.isActive(ASK_OWNER_ID)) {
+      const token = guard.getAcquisitionToken();
+      if (token) guard.release(ASK_OWNER_ID, token, ctx);
     }
 
     const match = event.text.match(/^\/ask(?:\s+([\s\S]*))?$/);
@@ -140,20 +131,13 @@ export default function askExtension(pi: ExtensionAPI): void {
       return { action: "handled" };
     }
 
-    if (askAcquisitionToken) {
-      guard.release(ASK_OWNER_ID, askAcquisitionToken, ctx);
-    }
-
     const result = guard.acquire({
       ownerId: ASK_OWNER_ID,
       allowedTools: ASK_TOOL_NAMES,
-      context:
-        "[ASK MODE]\nAnswer the question directly and concisely. Use the available lookup, status, image, or sprite tools only when genuinely helpful. Image and sprite generation may create output files; do not otherwise change project files, modify works, todos, loops, or monitors, or run shell commands.",
     });
     if (result.status !== "active" || !result.acquisitionToken) {
       return { action: "handled" };
     }
-    askAcquisitionToken = result.acquisitionToken;
     ctx.ui.setStatus("ask", ctx.ui.theme.fg("warning", "ask"));
 
     return event.images
