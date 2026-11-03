@@ -1,3 +1,6 @@
+> **Moved to Astack**
+> This repository is archived and read-only. Development is maintained in the [Astack monorepo](https://github.com/abhishek944/astack); see [packages/pi-ask](https://github.com/abhishek944/astack/tree/main/packages/pi-ask).
+
 # pi-ask
 
 A small [Pi](https://pi.dev) extension for simple, one-shot questions.
