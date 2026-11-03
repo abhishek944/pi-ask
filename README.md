@@ -95,6 +95,36 @@ Extensions that start unguarded custom-message runs during another run's settlem
 
 The guard module is exported as `@abhishek944/pi-ask/guard`. The `pi-ask` extension must also be loaded so its shared-event listeners are registered.
 
+## Native Durable extension (settings-only)
+
+For Durable 1.1 hosts, import `@abhishek944/pi-ask/durable` and install
+`createAskDurableExtension` in a registry before opening a Harness:
+
+```ts
+import { createAskDurableExtension } from "@abhishek944/pi-ask/durable";
+import { createRegistry } from "@earendil-works/pi-durable";
+
+const registry = createRegistry();
+registry.install(createAskDurableExtension({ allowedTools: ["read", "grep", "find", "ls"] }));
+// The host opens its own Harness with its models/storage/env and installs the extension.
+```
+
+Settings are serializable only: `allowedTools` (exact native tool names, default
+read-only policy) and `maxAnswerChars` (default 100000). The factory copies and
+freezes them. Execution context and native api objects come from Durable at
+execute time. There are no admission, quota, auth, storage, or callback options.
+
+The native `ask` tool creates an owned child conversation, restricts its agent to
+the intersection of the allowlist with registry tools, enforces the same
+allowlist through a conversation-scoped guard document, submits the question with
+a deterministic request id, returns the bounded answer text, and restores the
+child to unrestricted state. Provider spend is `replay: "unsafe"`; unanswered or
+empty answers return bounded `isError` text and never fabricate content.
+
+Native exclusions: no `/ask` or `/ask tools` commands, no desktop event-bus
+guard protocol or `setActiveTools` behavior, and no TUI status or context
+injection. The guard enforces allowed tool names only.
+
 ## Notes
 
 - `/ask` needs a question. Running it without text shows a short usage message.
