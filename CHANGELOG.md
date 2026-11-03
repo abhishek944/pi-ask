@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.4 - 2026-11-03
+
+- Added `@abhishek944/pi-ask/durable`, a settings-only native Durable extension that installs one `ask` tool for Durable 1.1 hosts.
+- The native `ask` tool runs an owned child conversation restricted to the intersection of the configured `allowedTools` (read-only by default) with the registry tools, then restores it to unrestricted state.
+- Returned answer text is bounded by `maxAnswerChars`, provider spend is marked `replay: "unsafe"`, and unanswered or empty answers return bounded `isError` text instead of fabricated content.
+- The native extension excludes `/ask` commands, the desktop guard event protocol, and TUI status or context injection.
+
 ## 0.4.3 - 2026-10-18
 
 - Keep `/ask` tool restrictions scoped to its answer without injecting Ask Mode instructions into the conversation.
